@@ -757,9 +757,9 @@ dd {
 
 .character {
   display: grid;
-  grid-template-columns: 124px minmax(0, 1fr);
+  grid-template-columns: 96px minmax(0, 1fr);
   gap: 12px;
-  min-height: 196px;
+  min-height: 176px;
   padding: 14px;
   overflow: hidden;
   animation: panel-enter 500ms ease both;
@@ -774,621 +774,40 @@ dd {
   animation-delay: 70ms;
 }
 
-.character.animated .char-avatar {
-  animation: character-bounce 850ms ease both;
-}
-
 .char-avatar {
   position: relative;
-  width: 120px;
-  height: 172px;
+  width: 88px;
+  height: 106px;
   margin: 0 auto;
   flex-shrink: 0;
 }
 
-/* ——— Shared face ——— */
-.char-face__brow {
-  position: absolute;
-  top: 21px;
-  width: 14px;
-  height: 4px;
-  border-top: 3px solid #1a1f1c;
-  border-radius: 50%;
-}
-
-.char-face__brow--left {
-  left: 10px;
-  transform: rotate(-12deg);
-}
-
-.char-face__brow--right {
-  right: 10px;
-  transform: rotate(10deg);
-}
-
-.char-face__eye {
-  position: absolute;
-  top: 28px;
-  width: 12px;
-  height: 8px;
-  border: 2px solid #1a1f1c;
-  border-radius: 50%;
-  background: #fff;
-  animation: blink 4.2s infinite;
-}
-
-.char-face__eye::after {
-  content: "";
-  position: absolute;
-  right: 1px;
-  top: 1px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #1a1f1c;
-}
-
-.char-face__eye--left {
-  left: 9px;
-}
-
-.char-face__eye--right {
-  right: 9px;
-}
-
-.char-face__cheek {
-  position: absolute;
-  top: 37px;
-  width: 9px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(224, 98, 72, 0.28);
-}
-
-.char-face__cheek--left {
-  left: 6px;
-}
-
-.char-face__cheek--right {
-  right: 6px;
-}
-
-.char-face__mouth {
-  position: absolute;
-  left: 19px;
-  top: 42px;
-  width: 15px;
-  height: 6px;
-  border-bottom: 3px solid #5c2a24;
-  border-radius: 0 0 10px 10px;
-}
-
-.character.mood-happy .char-face__mouth {
-  width: 18px;
-  left: 17px;
-  height: 8px;
-  border-bottom-width: 4px;
-}
-
-.character.mood-thinking .char-face__brow--left {
-  top: 20px;
-  transform: rotate(-18deg);
-}
-
-.character.mood-thinking .char-face__brow--right {
-  top: 22px;
-  transform: rotate(16deg);
-}
-
-.character.mood-sad .char-face__mouth {
-  top: 45px;
-  transform: rotate(180deg);
-}
-
-.character.mood-surprised .char-face__mouth {
-  left: 21px;
-  width: 9px;
-  height: 9px;
-  border: 3px solid #5c2a24;
-  border-radius: 50%;
-  border-bottom: 3px solid #5c2a24;
-}
-
-/* ——— Екатерина (advisor) ——— */
-.char-advisor__hair-back {
-  position: absolute;
-  left: 18px;
-  top: 4px;
-  width: 68px;
-  height: 82px;
-  border: 3px solid #121612;
-  border-radius: 36px 40px 28px 26px;
-  background: #1a1a1a;
-  box-shadow:
-    -7px 16px 0 -1px #1a1a1a,
-    7px 22px 0 -2px #1a1a1a;
-  transform: rotate(-4deg);
-  z-index: 0;
-}
-
-.char-advisor__hair-fringe {
-  position: absolute;
-  left: 30px;
-  top: 8px;
-  width: 58px;
-  height: 22px;
-  border: 3px solid #121612;
-  border-bottom: 0;
-  border-radius: 24px 20px 10px 10px;
-  background: #1a1a1a;
-  transform: rotate(-6deg);
-  z-index: 3;
-}
-
-.char-advisor__head {
-  position: absolute;
-  left: 34px;
-  top: 14px;
-  width: 50px;
-  height: 54px;
-  border: 3px solid #121612;
-  border-radius: 48% 48% 42% 42%;
-  background: #f0b995;
-  transform: rotate(-3deg);
-  z-index: 2;
-}
-
-.char-advisor__earring {
-  position: absolute;
-  right: -2px;
-  top: 36px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #d4a017;
-  border: 2px solid #8a6510;
-  z-index: 4;
-}
-
-.char-advisor__pose {
-  position: absolute;
-  inset: 0;
-}
-
-.char-advisor__blazer {
-  position: absolute;
-  left: 22px;
-  top: 66px;
-  width: 64px;
-  height: 58px;
-  border: 3px solid #121612;
-  border-radius: 16px 16px 10px 10px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 40%),
-    #1f5c40;
-  z-index: 1;
-}
-
-.char-advisor__collar {
-  position: absolute;
-  left: 22px;
-  top: 0;
-  width: 20px;
-  height: 14px;
-  background: #f7f4ec;
-  clip-path: polygon(50% 100%, 0 0, 100% 0);
-}
-
-.char-advisor__lapel {
-  position: absolute;
-  top: 8px;
-  width: 18px;
-  height: 28px;
-  background: #174832;
-  border: 2px solid #121612;
-}
-
-.char-advisor__lapel--left {
-  left: 6px;
-  transform: skewY(8deg);
-  border-radius: 4px 0 0 8px;
-}
-
-.char-advisor__lapel--right {
-  right: 6px;
-  transform: skewY(-8deg);
-  border-radius: 0 4px 8px 0;
-}
-
-.char-advisor__blouse {
-  position: absolute;
-  left: 24px;
-  top: 18px;
-  width: 16px;
-  height: 30px;
-  background: #f7f4ec;
-  border-radius: 2px;
-}
-
-.char-advisor__arm {
-  position: absolute;
-  width: 14px;
-  height: 42px;
-  border: 3px solid #121612;
-  border-radius: 10px;
-  background: #f0b995;
-  transform-origin: top center;
-  z-index: 2;
-}
-
-.char-advisor__arm--left {
-  left: 18px;
-  top: 72px;
-  transform: rotate(28deg);
-}
-
-.char-advisor__arm--right {
-  right: 14px;
-  top: 70px;
-  transform: rotate(-12deg);
-}
-
-.character--advisor.animated .char-advisor__arm--right {
-  animation: advisor-gesture 900ms ease;
-}
-
-.char-advisor__tablet {
-  position: absolute;
-  right: 2px;
-  top: 88px;
-  width: 28px;
-  height: 36px;
-  border: 3px solid #121612;
-  border-radius: 4px;
-  background: #f5f0e4;
-  transform: rotate(-14deg);
-  z-index: 3;
-  display: grid;
-  gap: 4px;
-  padding: 6px 4px;
-}
-
-.char-advisor__tablet-line {
+.char-svg {
   display: block;
-  height: 3px;
-  border-radius: 2px;
-  background: #7a9e8c;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
-.char-advisor__tablet-line.short {
-  width: 70%;
+.char-svg--advisor {
+  filter: drop-shadow(0 4px 8px rgba(31, 107, 71, 0.12));
 }
 
-.char-advisor__skirt {
-  position: absolute;
-  left: 28px;
-  top: 118px;
-  width: 52px;
-  height: 28px;
-  border: 3px solid #121612;
-  border-top: 0;
-  border-radius: 0 0 14px 14px;
-  background: #163d2c;
-  z-index: 0;
+.char-svg--engineer {
+  filter: drop-shadow(0 4px 8px rgba(184, 116, 18, 0.12));
 }
 
-.char-advisor__leg {
-  position: absolute;
-  top: 140px;
-  width: 10px;
-  height: 22px;
-  background: #f0b995;
-  border: 2px solid #121612;
-  border-radius: 4px;
-  z-index: 0;
+.character.animated .char-svg {
+  animation: character-bounce 850ms ease both;
 }
 
-.char-advisor__leg--left {
-  left: 40px;
+.character--advisor.animated .char-svg {
+  animation: character-bounce 850ms ease both, advisor-gesture 900ms ease;
 }
 
-.char-advisor__leg--right {
-  left: 54px;
+.character--engineer.animated .char-svg {
+  animation: character-bounce 850ms ease both, engineer-wave 880ms ease;
 }
-
-.char-advisor__shoe {
-  position: absolute;
-  top: 158px;
-  width: 16px;
-  height: 8px;
-  border: 3px solid #121612;
-  border-radius: 8px 8px 4px 4px;
-  background: #1a1a1a;
-  z-index: 1;
-}
-
-.char-advisor__shoe--left {
-  left: 34px;
-}
-
-.char-advisor__shoe--right {
-  left: 52px;
-}
-
-/* ——— Влад (engineer) ——— */
-.char-engineer__goggles {
-  position: absolute;
-  left: 30px;
-  top: 6px;
-  width: 58px;
-  height: 18px;
-  border: 3px solid #121612;
-  border-radius: 10px;
-  background: rgba(180, 210, 220, 0.55);
-  z-index: 4;
-  transform: rotate(-6deg);
-}
-
-.char-engineer__goggles::before,
-.char-engineer__goggles::after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  width: 22px;
-  height: 10px;
-  border: 2px solid #3d5a62;
-  border-radius: 4px;
-  background: rgba(200, 230, 238, 0.7);
-}
-
-.char-engineer__goggles::before {
-  left: 3px;
-}
-
-.char-engineer__goggles::after {
-  right: 3px;
-}
-
-.char-engineer__head {
-  position: absolute;
-  left: 32px;
-  top: 18px;
-  width: 52px;
-  height: 54px;
-  border: 3px solid #121612;
-  border-radius: 46% 46% 40% 40%;
-  background: #e8a96a;
-  transform: rotate(5deg);
-  z-index: 2;
-}
-
-.char-engineer__hair {
-  position: absolute;
-  left: -8px;
-  top: -10px;
-  width: 64px;
-  height: 24px;
-  border: 3px solid #121612;
-  border-radius: 40% 50% 30% 40%;
-  background: #8b4a12;
-  box-shadow:
-    8px -4px 0 -3px #8b4a12,
-    -4px 2px 0 -3px #8b4a12;
-  transform: rotate(-8deg);
-}
-
-.char-engineer__pose {
-  position: absolute;
-  inset: 0;
-}
-
-.char-engineer__jacket {
-  position: absolute;
-  left: 20px;
-  top: 68px;
-  width: 62px;
-  height: 52px;
-  border: 3px solid #121612;
-  border-radius: 14px 14px 8px 8px;
-  background:
-    radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.15), transparent 20%),
-    #1a2830;
-  z-index: 1;
-  transform: rotate(3deg);
-}
-
-.char-engineer__stripe {
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  top: 18px;
-  height: 5px;
-  border-radius: 2px;
-  background: #e8c84a;
-}
-
-.char-engineer__pocket {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  width: 16px;
-  height: 14px;
-  border: 2px solid #2a3a44;
-  border-radius: 0 0 4px 4px;
-  background: #243038;
-}
-
-.char-engineer__badge-pin {
-  position: absolute;
-  right: 12px;
-  top: 10px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #3d8ea8;
-  border: 2px solid #1a2830;
-}
-
-.char-engineer__arm {
-  position: absolute;
-  width: 14px;
-  height: 38px;
-  border: 3px solid #121612;
-  border-radius: 10px;
-  background: #e8a96a;
-  transform-origin: top center;
-  z-index: 2;
-}
-
-.char-engineer__arm--left {
-  left: 14px;
-  top: 74px;
-  transform: rotate(42deg);
-}
-
-.char-engineer__arm--right {
-  right: 10px;
-  top: 76px;
-  transform: rotate(-38deg);
-}
-
-.character--engineer.animated .char-engineer__arm--right {
-  animation: engineer-wave 880ms ease;
-}
-
-.char-engineer__wrench {
-  position: absolute;
-  left: 2px;
-  top: 98px;
-  width: 26px;
-  height: 10px;
-  border: 3px solid #121612;
-  border-radius: 2px;
-  background: #8a9aa3;
-  transform: rotate(24deg);
-  z-index: 3;
-}
-
-.char-engineer__wrench::before {
-  content: "";
-  position: absolute;
-  left: -8px;
-  top: -4px;
-  width: 12px;
-  height: 16px;
-  border: 3px solid #121612;
-  border-radius: 2px;
-  background: #8a9aa3;
-  transform: rotate(-30deg);
-}
-
-.char-engineer__blueprint {
-  position: absolute;
-  right: 0;
-  top: 96px;
-  width: 30px;
-  height: 24px;
-  border: 3px solid #121612;
-  border-radius: 2px;
-  background: #e8f0f5;
-  transform: rotate(-8deg);
-  z-index: 3;
-  display: grid;
-  gap: 3px;
-  padding: 4px;
-}
-
-.char-engineer__blueprint span {
-  display: block;
-  height: 2px;
-  border-radius: 1px;
-  background: #5a8aa8;
-}
-
-.char-engineer__blueprint span:nth-child(2) {
-  width: 80%;
-}
-
-.char-engineer__blueprint span:nth-child(3) {
-  width: 60%;
-}
-
-.char-engineer__pants {
-  position: absolute;
-  left: 26px;
-  top: 114px;
-  width: 50px;
-  height: 22px;
-  border: 3px solid #121612;
-  border-top: 0;
-  border-radius: 0 0 6px 6px;
-  background: #123d4f;
-  z-index: 0;
-}
-
-.char-engineer__leg {
-  position: absolute;
-  top: 132px;
-  width: 12px;
-  height: 20px;
-  border: 3px solid #121612;
-  border-radius: 4px;
-  background: #123d4f;
-  z-index: 0;
-}
-
-.char-engineer__leg--left {
-  left: 34px;
-  transform: rotate(8deg);
-}
-
-.char-engineer__leg--right {
-  left: 52px;
-  transform: rotate(-6deg);
-}
-
-.char-engineer__boot {
-  position: absolute;
-  top: 148px;
-  width: 18px;
-  height: 10px;
-  border: 3px solid #121612;
-  border-radius: 6px 6px 4px 4px;
-  background: #2a2018;
-  z-index: 1;
-}
-
-.char-engineer__boot--left {
-  left: 28px;
-}
-
-.char-engineer__boot--right {
-  left: 50px;
-}
-
-.char-engineer__boot::after {
-  content: "";
-  position: absolute;
-  left: -2px;
-  right: -2px;
-  bottom: -3px;
-  height: 4px;
-  border-radius: 2px;
-  background: #e8c84a;
-}
-
-.char-engineer__bench {
-  position: absolute;
-  left: 8px;
-  bottom: 2px;
-  width: 104px;
-  height: 8px;
-  border: 3px solid #121612;
-  border-radius: 2px;
-  background: #6b5344;
-  z-index: 0;
-}
-
 .character-copy {
   min-width: 0;
 }
@@ -1807,20 +1226,20 @@ select:focus {
 @keyframes advisor-gesture {
   0%,
   100% {
-    transform: rotate(-12deg);
+    transform: translateY(0) rotate(0deg);
   }
   45% {
-    transform: rotate(-28deg) translateY(-3px);
+    transform: translateY(-2px) rotate(-2deg);
   }
 }
 
 @keyframes engineer-wave {
   0%,
   100% {
-    transform: rotate(-38deg);
+    transform: translateY(0) rotate(0deg);
   }
   50% {
-    transform: rotate(-58deg) translateY(-4px);
+    transform: translateY(-2px) rotate(3deg);
   }
 }
 

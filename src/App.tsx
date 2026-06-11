@@ -59,7 +59,11 @@ export default function App() {
           />
         </div>
       </div>
-      <TurnSummary state={state} onClose={() => dispatch({ type: "CLOSE_TURN_SUMMARY" })} />
+      <TurnSummary
+        state={state}
+        onContinue={() => dispatch({ type: "CLOSE_TURN_SUMMARY" })}
+        onNewGame={() => dispatch({ type: "START_NEW_GAME" })}
+      />
       <TutorialModal isOpen={isTutorialOpen} onClose={closeTutorial} />
     </main>
   );

@@ -144,7 +144,7 @@ export const createInitialState = (): GameState => ({
 
 // Central reducer for all gameplay transitions. It delegates calculations to pure helpers.
 export function gameReducer(state: GameState, action: GameAction): GameState {
-  if (state.isGameOver && action.type !== "START_NEW_GAME") {
+  if (state.isGameOver && action.type !== "START_NEW_GAME" && action.type !== "CLOSE_TURN_SUMMARY") {
     return state;
   }
 

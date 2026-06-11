@@ -5,6 +5,7 @@ export const uiTexts = {
   newGame: "Новая игра",
   endTurn: "Завершить квартал",
   close: "Закрыть",
+  newRound: "Новый раунд",
   apply: "Подать заявку",
   invest: "Вложить средства",
   pause: "Приостановить",

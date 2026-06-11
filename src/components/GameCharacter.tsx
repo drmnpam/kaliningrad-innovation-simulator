@@ -42,17 +42,3 @@ export function GameCharacter({
     </article>
   );
 }
-
-export function CharacterFace() {
-  return (
-    <>
-      <span className="char-face__brow char-face__brow--left" />
-      <span className="char-face__brow char-face__brow--right" />
-      <span className="char-face__eye char-face__eye--left" />
-      <span className="char-face__eye char-face__eye--right" />
-      <span className="char-face__cheek char-face__cheek--left" />
-      <span className="char-face__cheek char-face__cheek--right" />
-      <span className="char-face__mouth" />
-    </>
-  );
-}

@@ -5,7 +5,8 @@ import type { GameEventType, GameState } from "../game/gameState";
 
 type TurnSummaryProps = {
   state: GameState;
-  onClose: () => void;
+  onContinue: () => void;
+  onNewGame: () => void;
 };
 
 const eventMeta: Record<GameEventType, { label: string; className: string }> = {
@@ -17,31 +18,34 @@ const eventMeta: Record<GameEventType, { label: string; className: string }> = {
   info: { label: "Событие", className: "event-info" },
 };
 
-export function TurnSummary({ state, onClose }: TurnSummaryProps) {
+export function TurnSummary({ state, onContinue, onNewGame }: TurnSummaryProps) {
   if (!state.showTurnSummary) {
     return null;
   }
 
   const score = calculateInnovationScore(state);
   const successful = state.projects.filter((project) => project.isSuccessful).length;
+  const handlePrimaryAction = () => {
+    if (state.isGameOver) {
+      onNewGame();
+      return;
+    }
+    onContinue();
+  };
 
   return (
-    <div className="modal-backdrop" role="presentation" onClick={onClose}>
+    <div className="modal-backdrop" role="presentation">
       <section
         className={`modal turn-summary${state.isGameOver ? " modal--final" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label="Итоги хода"
-        onClick={(event) => event.stopPropagation()}
       >
         <div className="modal-header">
           <div>
             <p className="eyebrow">{state.isGameOver ? "Финал партии" : "Итоги квартала"}</p>
             <h2>{state.isGameOver ? "Партия завершена" : `Ход ${Math.max(1, state.company.turn - 1)}`}</h2>
           </div>
-          <button className="icon-button" type="button" onClick={onClose} aria-label="Закрыть">
-            ×
-          </button>
         </div>
 
         <ul className="event-cards">
@@ -89,8 +93,8 @@ export function TurnSummary({ state, onClose }: TurnSummaryProps) {
           </div>
         ) : null}
 
-        <button className="button primary full" type="button" onClick={onClose}>
-          {uiTexts.close}
+        <button className="button primary full" type="button" onClick={handlePrimaryAction}>
+          {state.isGameOver ? uiTexts.newGame : uiTexts.newRound}
         </button>
       </section>
     </div>
