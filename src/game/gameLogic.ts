@@ -54,6 +54,10 @@ export function canApplySupport(
   project: Project,
   support: SupportMeasure,
 ): { ok: true } | { ok: false; reason: string } {
+  if (project.unlockedAtTurn > state.company.turn) {
+    return { ok: false, reason: "Это направление ещё не открыто. Подождите нескольких кварталов." };
+  }
+
   if (!project.isActive) {
     return { ok: false, reason: "Проект приостановлен. Возобновите его перед подачей заявки." };
   }
@@ -225,8 +229,20 @@ export function generateTurnOutcome(state: GameState): GameState {
   let company = { ...state.company };
   let projects = state.projects.map((project) => ({ ...project }));
 
+  // Check for newly unlocked projects
+  const nextTurnNum = company.turn + 1;
+  projects.forEach((project) => {
+    if (project.unlockedAtTurn === nextTurnNum) {
+      events.push({
+        id: `unlock-${project.id}`,
+        type: "info",
+        message: `Компания выросла — новое направление открыто: «${project.name}». Изучите его стадию и подберите меры поддержки.`,
+      });
+    }
+  });
+
   projects = projects.map((project) => {
-    if (!project.isActive || project.isSuccessful !== null) {
+    if (!project.isActive || project.isSuccessful !== null || project.unlockedAtTurn > company.turn) {
       return project;
     }
 

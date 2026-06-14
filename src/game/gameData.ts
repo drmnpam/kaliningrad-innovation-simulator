@@ -19,6 +19,8 @@ export const sectorLabels = {
 
 export const stageOrder = ["idea", "rnd", "prototype", "pilot", "commercial"] as const;
 
+// Проекты появляются постепенно: первые два — с самого начала,
+// остальные открываются на указанном ходу, создавая ощущение роста компании.
 export const initialProjects: Project[] = [
   {
     id: "bio-packaging",
@@ -31,6 +33,7 @@ export const initialProjects: Project[] = [
     successChanceModifier: 5,
     isActive: true,
     isSuccessful: null,
+    unlockedAtTurn: 1,
   },
   {
     id: "med-sensor",
@@ -43,6 +46,7 @@ export const initialProjects: Project[] = [
     successChanceModifier: 0,
     isActive: true,
     isSuccessful: null,
+    unlockedAtTurn: 1,
   },
   {
     id: "cnc-module",
@@ -55,6 +59,7 @@ export const initialProjects: Project[] = [
     successChanceModifier: 8,
     isActive: true,
     isSuccessful: null,
+    unlockedAtTurn: 4,
   },
   {
     id: "industrial-vision",
@@ -67,6 +72,7 @@ export const initialProjects: Project[] = [
     successChanceModifier: 3,
     isActive: true,
     isSuccessful: null,
+    unlockedAtTurn: 7,
   },
   {
     id: "neuro-analytics",
@@ -79,16 +85,17 @@ export const initialProjects: Project[] = [
     successChanceModifier: 10,
     isActive: true,
     isSuccessful: null,
+    unlockedAtTurn: 11,
   },
 ];
 
 export const supportMeasures: SupportMeasure[] = [
   {
     id: "iic-engineering-subsidy",
-    name: "Субсидия ИИЦ на инжиниринговые услуги",
+    name: "Субсидия ЦПП КО на инжиниринговые услуги",
     type: "regional_engineering_subsidy",
     description:
-      "Компенсация до 50% затрат на услуги инжиниринговых центров. В игровой модели лимит поддержки составляет 2 000 000 рублей.",
+      "Компенсация до 50% затрат на услуги инжинирингового центра ЦПП КО «Мой бизнес». В игровой модели лимит поддержки составляет 2 000 000 рублей.",
     maxAmount: 2_000_000,
     coveragePercent: 50,
     requiresCofinancing: true,
@@ -97,11 +104,11 @@ export const supportMeasures: SupportMeasure[] = [
   },
   {
     id: "fasie-start-1",
-    name: "Грант ФАСИЭ «Старт-1»",
+    name: "Грант ФСИ «Старт-1»",
     type: "fasie_start",
     description:
-      "Ранняя поддержка НИОКР до 5 000 000 рублей без обязательного софинансирования. Лучше всего работает на стадии идеи и первых исследований.",
-    maxAmount: 5_000_000,
+      "Ранняя поддержка НИОКР от Фонда содействия инновациям (ФСИ) — до 4 000 000 рублей без обязательного софинансирования. Лучше всего работает на стадии идеи и первых исследований.",
+    maxAmount: 4_000_000,
     coveragePercent: 100,
     requiresCofinancing: false,
     applicableStages: ["idea", "rnd"],
@@ -109,10 +116,10 @@ export const supportMeasures: SupportMeasure[] = [
   },
   {
     id: "fasie-development-nti",
-    name: "Грант ФАСИЭ «Развитие-НТИ»",
+    name: "Грант ФСИ «Развитие-НТИ»",
     type: "fasie_development",
     description:
-      "Крупная программа развития технологического продукта. В игре ограничена 18 000 000 рублей для сохранения баланса и требует софинансирования.",
+      "Крупная программа ФСИ по развитию технологического продукта в рамках Национальной технологической инициативы. В игре ограничена 18 000 000 рублей и требует софинансирования.",
     maxAmount: 18_000_000,
     coveragePercent: 70,
     requiresCofinancing: true,
@@ -121,10 +128,10 @@ export const supportMeasures: SupportMeasure[] = [
   },
   {
     id: "fasie-commercialization-bio",
-    name: "Грант ФАСИЭ «Коммерциализация-Био»",
+    name: "Грант ФСИ «Коммерциализация-Био»",
     type: "fasie_commercialization",
     description:
-      "Поддержка вывода биотехнологических решений на рынок. В игре покрывает часть затрат зрелых проектов и требует собственных вложений.",
+      "Программа ФСИ поддержки вывода биотехнологических решений на рынок. В игре покрывает часть затрат зрелых проектов и требует собственных вложений.",
     maxAmount: 14_000_000,
     coveragePercent: 65,
     requiresCofinancing: true,
@@ -133,10 +140,10 @@ export const supportMeasures: SupportMeasure[] = [
   },
   {
     id: "free-prototyping",
-    name: "Бесплатное прототипирование ЦМИТ/ИИЦ",
+    name: "Бесплатное прототипирование ЦМИТ/ЦПП КО",
     type: "free_prototyping",
     description:
-      "Льготная 3D-печать, сканирование и быстрые макеты. Денежной выплаты нет, зато повышается шанс технического прорыва и ускоряется переход стадии.",
+      "Льготная 3D-печать, сканирование и быстрые макеты через Центр молодёжного инновационного творчества (ЦМИТ) при ЦПП КО. Денежной выплаты нет, зато повышается шанс технического прорыва.",
     maxAmount: 0,
     coveragePercent: 100,
     requiresCofinancing: false,
@@ -152,7 +159,7 @@ export const initialCharacters: CharacterState[] = [
     mood: "neutral",
     currentMessage: {
       id: "ekaterina-start",
-      text: "Сначала сопоставьте стадии проектов с доступными мерами поддержки. Ранние заявки и зрелые гранты работают по разным правилам.",
+      text: "Начнём с двух проектов — не распыляйтесь. Сначала определите их стадии и подберите подходящие меры поддержки ФСИ или ЦПП КО.",
     },
   },
   {
@@ -161,7 +168,7 @@ export const initialCharacters: CharacterState[] = [
     mood: "thinking",
     currentMessage: {
       id: "vlad-start",
-      text: "Для НИОКР важны TRL, прототипы и запас бюджета. Без планомерных вложений даже хорошая идея застрянет.",
+      text: "Смотрите на TRL и бюджет. Новые направления будут открываться по мере роста компании — сосредоточьтесь на текущих.",
     },
   },
 ];

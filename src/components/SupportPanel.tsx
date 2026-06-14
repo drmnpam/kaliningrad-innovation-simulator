@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { sectorLabels, stageLabels } from "../game/gameData";
 import { supportTooltips, uiTexts } from "../game/gameTexts";
 import { formatMoney, isSupportApplied } from "../game/gameLogic";
-import type { GameState, SupportMeasure } from "../game/gameState";
+import type { GameState, Project, SupportMeasure } from "../game/gameState";
 
 type SupportPanelProps = {
   state: GameState;
@@ -10,8 +10,9 @@ type SupportPanelProps = {
 };
 
 export function SupportPanel({ state, onApply }: SupportPanelProps) {
+  const availableProjects = state.projects.filter((p) => p.unlockedAtTurn <= state.company.turn);
   const [selectedSupportId, setSelectedSupportId] = useState(state.supports[0]?.id ?? "");
-  const [selectedProjectId, setSelectedProjectId] = useState(state.projects[0]?.id ?? "");
+  const [selectedProjectId, setSelectedProjectId] = useState(availableProjects[0]?.id ?? "");
   const selectedSupport = useMemo(
     () => state.supports.find((support) => support.id === selectedSupportId) ?? state.supports[0],
     [selectedSupportId, state.supports],
@@ -68,6 +69,7 @@ export function SupportPanel({ state, onApply }: SupportPanelProps) {
             support={selectedSupport}
             selectedProjectId={selectedProjectId}
             state={state}
+            availableProjects={availableProjects}
             onProjectChange={setSelectedProjectId}
             onApply={onApply}
           />
@@ -81,17 +83,18 @@ type SupportDetailsProps = {
   support: SupportMeasure;
   selectedProjectId: string;
   state: GameState;
+  availableProjects: Project[];
   onProjectChange: (projectId: string) => void;
   onApply: (projectId: string, supportId: string) => void;
 };
 
-function SupportDetails({ support, selectedProjectId, state, onProjectChange, onApply }: SupportDetailsProps) {
+function SupportDetails({ support, selectedProjectId, state, availableProjects, onProjectChange, onApply }: SupportDetailsProps) {
   const sectors =
     support.applicableSectors === "any"
       ? "любые"
       : support.applicableSectors.map((sector) => sectorLabels[sector]).join(", ");
   const selectedPairApplied = isSupportApplied(state, selectedProjectId, support.id);
-  const allProjectsApplied = state.projects.every((project) => isSupportApplied(state, project.id, support.id));
+  const allProjectsApplied = availableProjects.every((project) => isSupportApplied(state, project.id, support.id));
 
   return (
     <div className={`support-details support-details--${support.type}`}>
@@ -122,7 +125,7 @@ function SupportDetails({ support, selectedProjectId, state, onProjectChange, on
       <label className="field">
         <span>{uiTexts.selectProject}</span>
         <select value={selectedProjectId} onChange={(event) => onProjectChange(event.target.value)}>
-          {state.projects.map((project) => {
+          {availableProjects.map((project) => {
             const applied = isSupportApplied(state, project.id, support.id);
 
             return (

@@ -70,6 +70,7 @@ export type Project = {
   successChanceModifier: number;
   isActive: boolean;
   isSuccessful: boolean | null;
+  unlockedAtTurn: number;
 };
 
 export type SupportMeasure = {
@@ -234,9 +235,21 @@ export function restoreGameState(candidate: unknown): GameState | null {
     name: character.name === "Влад" ? "Владислав" : character.name,
   })) as CharacterState[];
 
+  const initialState = createInitialState();
+
+  // Merge projects: carry over unlockedAtTurn from initial data if missing in old saves
+  const projects = (restored.projects ?? initialState.projects).map((project) => {
+    const initial = initialState.projects.find((p) => p.id === project.id);
+    return {
+      ...project,
+      unlockedAtTurn: (project as Project).unlockedAtTurn ?? initial?.unlockedAtTurn ?? 1,
+    };
+  });
+
   return {
-    ...createInitialState(),
+    ...initialState,
     ...restored,
+    projects,
     characters,
     turnEvents: (restored.turnEvents ?? []).map((event) => ({
       id: event.id,

@@ -9,7 +9,15 @@ type ProjectsPanelProps = {
   onToggleActive: (projectId: string) => void;
 };
 
+function turnToQuarter(turn: number): string {
+  const q = ((turn - 1) % 4) + 1;
+  const y = 2026 + Math.floor((turn - 1) / 4);
+  return `Q${q} ${y}`;
+}
+
 export function ProjectsPanel({ state, onInvest, onToggleActive }: ProjectsPanelProps) {
+  const activeCount = state.projects.filter((p) => p.unlockedAtTurn <= state.company.turn).length;
+
   return (
     <section className="panel projects-panel">
       <div className="panel-heading">
@@ -17,23 +25,55 @@ export function ProjectsPanel({ state, onInvest, onToggleActive }: ProjectsPanel
           <p className="eyebrow">Портфель</p>
           <h2>Проекты компании</h2>
         </div>
-        <span className="panel-count">{state.projects.length} направлений</span>
+        <span className="panel-count">{activeCount} из {state.projects.length} направлений</span>
       </div>
       <div className="projects-grid">
-        {state.projects.map((project, index) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            reputation={state.company.reputation}
-            grantCount={state.activeSupports.filter((item) => item.projectId === project.id).length}
-            canInvest={state.company.cash > 0 && !state.isGameOver}
-            onInvest={onInvest}
-            onToggleActive={onToggleActive}
-            style={{ animationDelay: `${index * 60}ms` }}
-          />
-        ))}
+        {state.projects.map((project, index) => {
+          const isLocked = project.unlockedAtTurn > state.company.turn;
+          return isLocked ? (
+            <LockedProjectCard
+              key={project.id}
+              project={project}
+              availableAt={turnToQuarter(project.unlockedAtTurn)}
+              style={{ animationDelay: `${index * 60}ms` }}
+            />
+          ) : (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              reputation={state.company.reputation}
+              grantCount={state.activeSupports.filter((item) => item.projectId === project.id).length}
+              canInvest={state.company.cash > 0 && !state.isGameOver}
+              onInvest={onInvest}
+              onToggleActive={onToggleActive}
+              style={{ animationDelay: `${index * 60}ms` }}
+            />
+          );
+        })}
       </div>
     </section>
+  );
+}
+
+type LockedProjectCardProps = {
+  project: Project;
+  availableAt: string;
+  style?: CSSProperties;
+};
+
+function LockedProjectCard({ project, availableAt, style }: LockedProjectCardProps) {
+  return (
+    <article className="project-card project-card--locked" style={style} aria-label={`Заблокированное направление: ${project.name}`}>
+      <div className="project-card__accent" aria-hidden="true" />
+      <div className="locked-overlay">
+        <div className="locked-icon" aria-hidden="true">🔒</div>
+        <div className="locked-info">
+          <span className="sector-tag">{sectorLabels[project.sector]}</span>
+          <h3 className="locked-title">{project.name}</h3>
+          <p className="locked-hint">Направление откроется в <strong>{availableAt}</strong>, когда компания наберёт достаточный опыт</p>
+        </div>
+      </div>
+    </article>
   );
 }
 

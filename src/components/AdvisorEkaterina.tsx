@@ -8,47 +8,139 @@ type AdvisorEkaterinaProps = {
 };
 
 function AdvisorAvatar({ mood }: { mood: CharacterMood }) {
-  const mouthPath =
-    mood === "happy"
-      ? "M34 44 Q40 50 46 44"
-      : mood === "sad"
-        ? "M34 48 Q40 42 46 48"
-        : mood === "surprised"
-          ? "M37 46 A3 3 0 1 1 43 46 A3 3 0 1 1 37 46"
-          : mood === "thinking"
-            ? "M36 46 Q40 44 44 46"
-            : "M35 45 Q40 48 45 45";
+  const isHappy = mood === "happy";
+  const isSad = mood === "sad";
+  const isSurprised = mood === "surprised";
+  const isThinking = mood === "thinking";
+
+  // Mouth shapes
+  const mouthPath = isHappy
+    ? "M32 46 Q40 54 48 46"
+    : isSad
+      ? "M32 50 Q40 43 48 50"
+      : isSurprised
+        ? "M36 46 A4 5 0 0 0 44 46 A4 5 0 0 0 36 46"
+        : isThinking
+          ? "M34 47 Q40 45 46 47"
+          : "M33 46 Q40 50 47 46";
+
+  // Eyebrow angles
+  const leftBrowD = isThinking
+    ? "M27 25 Q33 22 37 23"
+    : isSad
+      ? "M27 24 Q33 26 37 25"
+      : isSurprised
+        ? "M27 21 Q33 18 37 20"
+        : "M27 24 Q33 21 37 22";
+  const rightBrowD = isThinking
+    ? "M43 23 Q47 22 53 25"
+    : isSad
+      ? "M43 25 Q47 26 53 24"
+      : isSurprised
+        ? "M43 20 Q47 18 53 21"
+        : "M43 22 Q47 21 53 24";
+
+  // Cheek blush only when happy
+  const blushOpacity = isHappy ? 0.28 : 0;
 
   return (
-    <svg className="char-svg char-svg--advisor" viewBox="0 0 80 96" aria-hidden="true">
-      <ellipse cx="40" cy="88" rx="26" ry="5" fill="rgba(31,107,71,0.12)" />
+    <svg className="char-svg char-svg--advisor" viewBox="0 0 80 110" aria-hidden="true">
+      {/* Shadow */}
+      <ellipse cx="40" cy="105" rx="24" ry="4" fill="rgba(31,107,71,0.13)" />
+
+      {/* Body / jacket */}
       <path
-        d="M18 58 Q40 52 62 58 L58 78 Q40 84 22 78 Z"
-        fill="#2d7a54"
-        stroke="#1f5c40"
-        strokeWidth="1.5"
+        d="M14 72 Q20 60 30 57 L40 63 L50 57 Q60 60 66 72 L68 110 L12 110 Z"
+        fill="#1f6b47"
+        stroke="#154d33"
+        strokeWidth="1.2"
         strokeLinejoin="round"
       />
-      <path d="M34 58 L40 66 L46 58" fill="#f7f4ec" />
-      <ellipse cx="28" cy="66" rx="7" ry="16" fill="#f5c9a8" />
-      <ellipse cx="52" cy="66" rx="7" ry="16" fill="#f5c9a8" />
-      <rect x="48" y="62" width="14" height="18" rx="3" fill="#eef5f1" stroke="#7a9e8c" strokeWidth="1.5" />
-      <path d="M51 66 H59 M51 70 H57 M51 74 H55" stroke="#7a9e8c" strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="40" cy="34" r="18" fill="#f5c9a8" />
+      {/* Jacket lapels */}
+      <path d="M30 57 L36 72 L40 66 L44 72 L50 57" fill="#f7f4ec" opacity="0.9" />
+      {/* Jacket buttons */}
+      <circle cx="40" cy="76" r="1.6" fill="#154d33" opacity="0.7" />
+      <circle cx="40" cy="83" r="1.6" fill="#154d33" opacity="0.7" />
+
+      {/* Left arm */}
       <path
-        d="M22 28 C24 14 34 8 40 8 C46 8 56 14 58 28 C54 22 46 18 40 18 C34 18 26 22 22 28 Z"
-        fill="#3d2b22"
+        d="M14 72 Q8 80 10 95 L18 93 Q18 82 22 76 Z"
+        fill="#1f6b47"
+        stroke="#154d33"
+        strokeWidth="1"
       />
-      <path d="M22 30 C18 38 20 48 24 52" fill="none" stroke="#3d2b22" strokeWidth="6" strokeLinecap="round" />
-      <path d="M58 30 C62 38 60 48 56 52" fill="none" stroke="#3d2b22" strokeWidth="6" strokeLinecap="round" />
-      <ellipse cx="33" cy="33" rx="3.5" ry="4.5" fill="#fff" />
-      <ellipse cx="47" cy="33" rx="3.5" ry="4.5" fill="#fff" />
-      <circle cx="34" cy="34" r="1.8" fill="#2b3330" />
-      <circle cx="48" cy="34" r="1.8" fill="#2b3330" />
-      <path d="M28 38 Q30 40 32 38" stroke="#c97862" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      <path d="M48 38 Q50 40 52 38" stroke="#c97862" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+      {/* Left hand */}
+      <ellipse cx="14" cy="96" rx="5" ry="6" fill="#f5c9a8" />
+
+      {/* Right arm — holding a small document/tablet */}
+      <path
+        d="M66 72 Q72 80 70 95 L62 93 Q62 82 58 76 Z"
+        fill="#1f6b47"
+        stroke="#154d33"
+        strokeWidth="1"
+      />
+      {/* Tablet */}
+      <rect x="60" y="83" width="14" height="18" rx="2.5" fill="#eef5f1" stroke="#7ab09c" strokeWidth="1.2" />
+      <path d="M62 87 H72 M62 91 H70 M62 95 H68" stroke="#7ab09c" strokeWidth="1.2" strokeLinecap="round" />
+      <circle cx="67" cy="99" r="1" fill="#7ab09c" />
+
+      {/* Neck */}
+      <rect x="35" y="52" width="10" height="10" rx="3" fill="#f5c9a8" />
+
+      {/* Head */}
+      <ellipse cx="40" cy="34" rx="19" ry="21" fill="#f5c9a8" />
+
+      {/* Hair — styled bun / shoulder length dark hair */}
+      <ellipse cx="40" cy="16" rx="19" ry="10" fill="#2a1f1a" />
+      <path
+        d="M21 22 C18 14 22 8 30 7 C36 5 44 5 50 7 C58 8 62 14 59 22 C54 14 46 11 40 11 C34 11 26 14 21 22 Z"
+        fill="#2a1f1a"
+      />
+      {/* Side hair strands */}
+      <path d="M21 22 C16 32 17 44 20 50" fill="none" stroke="#2a1f1a" strokeWidth="7" strokeLinecap="round" />
+      <path d="M59 22 C64 32 63 44 60 50" fill="none" stroke="#2a1f1a" strokeWidth="7" strokeLinecap="round" />
+
+      {/* Ears */}
+      <ellipse cx="21" cy="34" rx="3.5" ry="4.5" fill="#f0b898" />
+      <ellipse cx="59" cy="34" rx="3.5" ry="4.5" fill="#f0b898" />
+      {/* Earrings */}
+      <circle cx="21" cy="38" r="1.5" fill="#d4a017" />
+      <circle cx="59" cy="38" r="1.5" fill="#d4a017" />
+
+      {/* Eyebrows */}
+      <path d={leftBrowD} stroke="#2a1f1a" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+      <path d={rightBrowD} stroke="#2a1f1a" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+
+      {/* Eyes — whites */}
+      <ellipse cx="33" cy="31" rx="4" ry="5" fill="#fff" />
+      <ellipse cx="47" cy="31" rx="4" ry="5" fill="#fff" />
+      {/* Irises */}
+      <circle cx="33.5" cy="32" r="2.8" fill="#3d6b82" />
+      <circle cx="47.5" cy="32" r="2.8" fill="#3d6b82" />
+      {/* Pupils */}
+      <circle cx="33.8" cy="32" r="1.4" fill="#1a1a1a" />
+      <circle cx="47.8" cy="32" r="1.4" fill="#1a1a1a" />
+      {/* Eye shine */}
+      <circle cx="34.8" cy="31" r="0.7" fill="#fff" />
+      <circle cx="48.8" cy="31" r="0.7" fill="#fff" />
+
+      {/* Glasses frames */}
+      <rect x="27.5" y="26.5" width="11" height="9" rx="3.5" fill="none" stroke="#3d4f5c" strokeWidth="1.4" />
+      <rect x="41.5" y="26.5" width="11" height="9" rx="3.5" fill="none" stroke="#3d4f5c" strokeWidth="1.4" />
+      <path d="M38.5 31 H41.5" stroke="#3d4f5c" strokeWidth="1.4" />
+      <path d="M27.5 31 L24 31" stroke="#3d4f5c" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M52.5 31 L56 31" stroke="#3d4f5c" strokeWidth="1.2" strokeLinecap="round" />
+
+      {/* Nose */}
+      <path d="M38 37 Q40 40 42 37" stroke="#d4906a" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+
+      {/* Cheek blush */}
+      <ellipse cx="29" cy="38" rx="5" ry="3" fill="#e87c7c" opacity={blushOpacity} />
+      <ellipse cx="51" cy="38" rx="5" ry="3" fill="#e87c7c" opacity={blushOpacity} />
+
+      {/* Mouth */}
       <path d={mouthPath} stroke="#8b4f45" strokeWidth="2" fill="none" strokeLinecap="round" />
-      <circle cx="56" cy="36" r="2" fill="#d4a017" />
+      {isHappy && <path d="M32 46 Q40 54 48 46" fill="rgba(220,130,120,0.15)" />}
     </svg>
   );
 }
